@@ -2,6 +2,7 @@ package com.libraryapp.a_e_5_libreria.service;
 
 import com.libraryapp.a_e_5_libreria.domain.Autor;
 import com.libraryapp.a_e_5_libreria.domain.Editorial;
+import com.libraryapp.a_e_5_libreria.domain.Libreria;
 import com.libraryapp.a_e_5_libreria.domain.Libro;
 import com.libraryapp.a_e_5_libreria.model.LibroDTO;
 import com.libraryapp.a_e_5_libreria.repos.AutorRepository;
@@ -25,8 +26,8 @@ public class LibroService {
     private final LibreriaRepository libreriaRepository;
 
     public LibroService(final LibroRepository libroRepository,
-            final AutorRepository autorRepository, final EditorialRepository editorialRepository,
-            final LibreriaRepository libreriaRepository) {
+                        final AutorRepository autorRepository, final EditorialRepository editorialRepository,
+                        final LibreriaRepository libreriaRepository) {
         this.libroRepository = libroRepository;
         this.autorRepository = autorRepository;
         this.editorialRepository = editorialRepository;
@@ -44,6 +45,14 @@ public class LibroService {
         return libroRepository.findById(id)
                 .map(libro -> mapToDTO(libro, new LibroDTO()))
                 .orElseThrow(NotFoundException::new);
+    }
+
+    public List<LibroDTO> findAllByLibreriaId(final Long libreriaId) {
+        final Libreria libreria = libreriaRepository.findById(libreriaId)
+                .orElseThrow(() -> new NotFoundException("libreria not found"));
+        return libreria.getLibro().stream()
+                .map(libro -> mapToDTO(libro, new LibroDTO()))
+                .toList();
     }
 
     public Long create(final LibroDTO libroDTO) {

@@ -3,6 +3,7 @@ package com.libraryapp.a_e_5_libreria.service;
 import com.libraryapp.a_e_5_libreria.domain.Libreria;
 import com.libraryapp.a_e_5_libreria.domain.Libro;
 import com.libraryapp.a_e_5_libreria.model.LibreriaDTO;
+import com.libraryapp.a_e_5_libreria.model.LibroDTO;
 import com.libraryapp.a_e_5_libreria.repos.LibreriaRepository;
 import com.libraryapp.a_e_5_libreria.repos.LibroRepository;
 import com.libraryapp.a_e_5_libreria.util.NotFoundException;
@@ -75,6 +76,23 @@ public class LibreriaService {
         }
         libreria.setLibro(new HashSet<>(libro));
         return libreria;
+    }
+
+    public List<LibroDTO> getLibrosByLibreria(final Long id) {
+        final Libreria libreria = libreriaRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        return libreria.getLibro().stream()
+                .map(this::mapLibroToDTO)
+                .toList();
+    }
+
+    private LibroDTO mapLibroToDTO(final Libro libro) {
+        final LibroDTO libroDTO = new LibroDTO();
+        libroDTO.setId(libro.getId());
+        libroDTO.setTitulo(libro.getTitulo());
+        libroDTO.setAutor(libro.getAutor() == null ? null : libro.getAutor().getId());
+        libroDTO.setEditorial(libro.getEditorial() == null ? null : libro.getEditorial().getId());
+        return libroDTO;
     }
 
 }

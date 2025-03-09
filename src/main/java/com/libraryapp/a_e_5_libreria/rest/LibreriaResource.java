@@ -1,6 +1,7 @@
 package com.libraryapp.a_e_5_libreria.rest;
 
 import com.libraryapp.a_e_5_libreria.model.LibreriaDTO;
+import com.libraryapp.a_e_5_libreria.model.LibroDTO;
 import com.libraryapp.a_e_5_libreria.service.LibreriaService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -54,6 +55,11 @@ public class LibreriaResource {
     public ResponseEntity<Void> deleteLibreria(@PathVariable(name = "id") final Long id) {
         libreriaService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/libros")
+    public ResponseEntity<List<LibroDTO>> getLibrosByLibreria(@PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(libreriaService.getLibrosByLibreria(id));
     }
 
 }

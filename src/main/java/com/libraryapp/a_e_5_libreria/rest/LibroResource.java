@@ -37,6 +37,11 @@ public class LibroResource {
         return ResponseEntity.ok(libroService.get(id));
     }
 
+    @GetMapping("/libreria/{libreriaId}")
+    public ResponseEntity<List<LibroDTO>> getLibrosByLibreria(@PathVariable(name = "libreriaId") final Long libreriaId) {
+        return ResponseEntity.ok(libroService.findAllByLibreriaId(libreriaId));
+    }
+
     @PostMapping
     public ResponseEntity<Long> createLibro(@RequestBody @Valid final LibroDTO libroDTO) {
         final Long createdId = libroService.create(libroDTO);
@@ -45,7 +50,7 @@ public class LibroResource {
 
     @PutMapping("/{id}")
     public ResponseEntity<Long> updateLibro(@PathVariable(name = "id") final Long id,
-            @RequestBody @Valid final LibroDTO libroDTO) {
+                                            @RequestBody @Valid final LibroDTO libroDTO) {
         libroService.update(id, libroDTO);
         return ResponseEntity.ok(id);
     }

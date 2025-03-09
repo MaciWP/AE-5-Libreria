@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${JDBC_DATABASE_URL:jdbc:mysql://localhost:3306/AE-5-Libreria?serverTimezone=UTC}
+    url: ${JDBC_DATABASE_URL:jdbc:mysql://localhost:3306/AE_5_Libreria?serverTimezone=UTC}
     username: ${JDBC_DATABASE_USERNAME:root}
-    password: ${JDBC_DATABASE_PASSWORD:<<YOUR_PASSWORD>>}
+    password: ${JDBC_DATABASE_PASSWORD:mering-fightable-isomerises-rhizopods-panaches-panes}
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 10
